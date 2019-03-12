@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{75BE9668-3B22-4B2E-83AC-682D04F279AE}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ca_ts</RootNamespace>
+    <AssemblyName>ca_ts</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\drllo\Documents\ca\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>10EFC54F74D73F0B1B0FAC92987193732165BBE5</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>ca_ts_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="NReco.VideoConverter, Version=1.1.3.0, Culture=neutral, PublicKeyToken=395ccb334978a0cd, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.VideoConverter.1.1.3\lib\net20\NReco.VideoConverter.dll</HintPath>
+    </Reference>
+    <Reference Include="NReco.VideoInfo, Version=1.1.1.0, Culture=neutral, PublicKeyToken=8f59ee36d2987295, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.VideoInfo.1.1.1\lib\net35\NReco.VideoInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="dd_ts.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dd_ts.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dd_ts.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dd_ts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dd_ts.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="fact_especializa.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fact_estatus.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fact_estatus_material.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fact_estatus_qa.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fact_est_exp.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fact_est_mat.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fact_tipo_err.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fact_tipo_rfc.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fact_tipo_usuarios.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="file_library.cs" />
+    <Compile Include="inf_caducidad_videos.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_caducidad_videos_dep.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_dispositivos.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_dispositivos_dep.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_empresa.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_exp_mat.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_fecha_transformacion.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_fecha_transformacion_dep.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_juzgados.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_juzgados_dep.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_log_ruta.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_master_jvl.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_material.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_material_dep.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_material_ext.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_material_ext_dep.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_ruta_videos.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_ruta_videos_dep.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_salas.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_salas_dep.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_sepomex.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_tribunal.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_tribunal_dep.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_usuarios.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inf_usuarios_dep.cs">
+      <DependentUpon>dd_ts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="networkconnection.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="dd_ts.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>dd_ts.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ca_ts_TemporaryKey.pfx" />
+    <None Include="dd_ts.edmx.diagram">
+      <DependentUpon>dd_ts.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dd_ts.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>dd_ts.edmx</DependentUpon>
+      <LastGenOutput>dd_ts.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="dd_ts.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>dd_ts.edmx</DependentUpon>
+      <LastGenOutput>dd_ts.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6 %28x86 y x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
