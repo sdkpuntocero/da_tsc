@@ -67,7 +67,7 @@ namespace ca_ts
                         clv_ini = f_rv.ruta_pass_ini;
 
 
-                         DirectoryInfo ruta_destino = new DirectoryInfo(f_rv.desc_ruta_fin);
+                        DirectoryInfo ruta_destino = new DirectoryInfo(f_rv.desc_ruta_fin);
                         int id_rv = f_rv.id_ruta_videos;
                         var networkPath = ruta_compartida.ToString();
                         var credentials = new NetworkCredential(usr_ini, clv_ini);
@@ -183,7 +183,9 @@ namespace ca_ts
 
                                 FFProbe ffProbe = new FFProbe();
                                 var videoInfo = ffProbe.GetMediaInfo(di_destino + "\\" + f_c_f.Name.ToString());
-                                string f_d = videoInfo.Duration.Hours + ":" + videoInfo.Duration.Minutes + ":" + videoInfo.Duration.Seconds;
+                                DateTime date1 = DateTime.Parse(videoInfo.Duration.ToString());
+
+                                string f_d = date1.ToLongTimeString();
 
                                 var g_media = new inf_exp_mat
                                 {
@@ -254,7 +256,8 @@ namespace ca_ts
 
                                     FFProbe ffProbe = new FFProbe();
                                     var videoInfo = ffProbe.GetMediaInfo(di_destino + "\\" + f_c_f.Name.ToString());
-                                    string f_d = videoInfo.Duration.Hours + ":" + videoInfo.Duration.Minutes + ":" + videoInfo.Duration.Seconds;
+                                    DateTime date1 = DateTime.Parse(videoInfo.Duration.ToString());
+                                    string f_d = date1.ToLongTimeString();
 
                                     var g_media = new inf_exp_mat
                                     {
@@ -337,7 +340,8 @@ namespace ca_ts
 
                                     FFProbe ffProbe = new FFProbe();
                                     var videoInfo = ffProbe.GetMediaInfo(di_destino + "\\" + f_c_f.Name.ToString());
-                                    string f_d = videoInfo.Duration.Hours + ":" + videoInfo.Duration.Minutes + ":" + videoInfo.Duration.Seconds;
+                                    DateTime date1 = DateTime.Parse(videoInfo.Duration.ToString());
+                                    string f_d = date1.ToLongTimeString();
 
                                     var g_media = new inf_exp_mat
                                     {
@@ -429,7 +433,8 @@ namespace ca_ts
 
                                 FFProbe ffProbe = new FFProbe();
                                 var videoInfo = ffProbe.GetMediaInfo(di_destino + "\\" + f_c_f.Name.ToString());
-                                string f_d = videoInfo.Duration.Hours + ":" + videoInfo.Duration.Minutes + ":" + videoInfo.Duration.Seconds;
+                                DateTime date1 = DateTime.Parse(videoInfo.Duration.ToString());
+                                string f_d = date1.ToLongTimeString();
 
                                 var g_media = new inf_exp_mat
                                 {
@@ -500,7 +505,8 @@ namespace ca_ts
 
                                     FFProbe ffProbe = new FFProbe();
                                     var videoInfo = ffProbe.GetMediaInfo(di_destino + "\\" + f_c_f.Name.ToString());
-                                    string f_d = videoInfo.Duration.Hours + ":" + videoInfo.Duration.Minutes + ":" + videoInfo.Duration.Seconds;
+                                    DateTime date1 = DateTime.Parse(videoInfo.Duration.ToString());
+                                    string f_d = date1.ToLongTimeString();
 
                                     var g_media = new inf_exp_mat
                                     {
@@ -583,7 +589,8 @@ namespace ca_ts
 
                                     FFProbe ffProbe = new FFProbe();
                                     var videoInfo = ffProbe.GetMediaInfo(di_destino + "\\" + f_c_f.Name.ToString());
-                                    string f_d = videoInfo.Duration.Hours + ":" + videoInfo.Duration.Minutes + ":" + videoInfo.Duration.Seconds;
+                                    DateTime date1 = DateTime.Parse(videoInfo.Duration.ToString());
+                                    string f_d = date1.ToLongTimeString();
 
                                     var g_media = new inf_exp_mat
                                     {
@@ -659,43 +666,44 @@ namespace ca_ts
                             edm_master.SaveChanges();
                             foreach (FileInfo f_c_f in dir_c_f.GetFiles("*mp4"))
                             {
-                            
-                                    string f_f = ruta_destino + "\\" + dir_c_f.Name + "\\" + f_c_f.Name;
-                                    var i_em_f = (from c in edm_master.inf_exp_mat
-                                                  where c.ruta_archivo == f_f
-                                                  select c).ToList();
 
-                                    if (i_em_f.Count == 0)
+                                string f_f = ruta_destino + "\\" + dir_c_f.Name + "\\" + f_c_f.Name;
+                                var i_em_f = (from c in edm_master.inf_exp_mat
+                                              where c.ruta_archivo == f_f
+                                              select c).ToList();
+
+                                if (i_em_f.Count == 0)
+                                {
+                                    DirectoryInfo di_destino = new DirectoryInfo(ruta_destino + "\\" + dir_c_f.Name);
+                                    di_destino.Create();
+
+                                    File.Copy(f_c_f.FullName, di_destino + "\\" + f_c_f.Name);
+
+                                    var i_masterf = (from c in edm_master.inf_master_jvl
+                                                     where c.id_control_exp == id_ctrl
+                                                     select c).ToList();
+
+                                    FFProbe ffProbe = new FFProbe();
+                                    var videoInfo = ffProbe.GetMediaInfo(di_destino + "\\" + f_c_f.Name.ToString());
+                                    DateTime date1 = DateTime.Parse(videoInfo.Duration.ToString());
+                                    string f_d = date1.ToLongTimeString();
+
+                                    var g_media = new inf_exp_mat
                                     {
-                                        DirectoryInfo di_destino = new DirectoryInfo(ruta_destino + "\\" + dir_c_f.Name);
-                                        di_destino.Create();
+                                        id_exp_mat = Guid.NewGuid(),
+                                        ruta_archivo = di_destino + "\\" + f_c_f.Name.ToString().Replace(ext_wmv, ext_mp4),
+                                        ruta_ext = di_destino + "\\" + f_c_f.Name.ToString().Replace(ext_wmv, ".pdf"),
+                                        duracion = f_d,
+                                        nom_archivo = f_c_f.Name.Replace(ext_mp4, ""),
+                                        id_est_mat = 2,
+                                        id_control_exp = id_ctrl,
+                                        fecha_registro = DateTime.Now,
+                                    };
 
-                                        File.Copy(f_c_f.FullName, di_destino + "\\" + f_c_f.Name);
+                                    edm_master.inf_exp_mat.Add(g_media);
+                                    edm_master.SaveChanges();
+                                }
 
-                                        var i_masterf = (from c in edm_master.inf_master_jvl
-                                                        where c.id_control_exp == id_ctrl
-                                                        select c).ToList();
-
-                                        FFProbe ffProbe = new FFProbe();
-                                        var videoInfo = ffProbe.GetMediaInfo(di_destino + "\\" + f_c_f.Name.ToString());
-                                        string f_d = videoInfo.Duration.Hours + ":" + videoInfo.Duration.Minutes + ":" + videoInfo.Duration.Seconds;
-
-                                        var g_media = new inf_exp_mat
-                                        {
-                                            id_exp_mat = Guid.NewGuid(),
-                                            ruta_archivo = di_destino + "\\" + f_c_f.Name.ToString().Replace(ext_wmv, ext_mp4),
-                                            ruta_ext = di_destino + "\\" + f_c_f.Name.ToString().Replace(ext_wmv, ".pdf"),
-                                            duracion = f_d,
-                                            nom_archivo = f_c_f.Name.Replace(ext_mp4, ""),
-                                            id_est_mat = 2,
-                                            id_control_exp = id_ctrl,
-                                            fecha_registro = DateTime.Now,
-                                        };
-
-                                        edm_master.inf_exp_mat.Add(g_media);
-                                        edm_master.SaveChanges();
-                                    }
-                                
                             }
                         }
                         else
@@ -721,7 +729,8 @@ namespace ca_ts
 
                                     FFProbe ffProbe = new FFProbe();
                                     var videoInfo = ffProbe.GetMediaInfo(di_destino + "\\" + f_c_f.Name.ToString());
-                                    string f_d = videoInfo.Duration.Hours + ":" + videoInfo.Duration.Minutes + ":" + videoInfo.Duration.Seconds;
+                                    DateTime date1 = DateTime.Parse(videoInfo.Duration.ToString());
+                                    string f_d = date1.ToLongTimeString();
 
                                     var g_media = new inf_exp_mat
                                     {
@@ -746,43 +755,44 @@ namespace ca_ts
                     {
                         foreach (FileInfo f_c_f in dir_c_f.GetFiles("*mp4"))
                         {
-                          
-                                string f_f = ruta_destino + "\\" + dir_c_f.Name + "\\" + f_c_f.Name;
-                                var i_em_f = (from c in edm_master.inf_exp_mat
-                                              where c.ruta_archivo == f_f
-                                              select c).ToList();
 
-                                if (i_em_f.Count == 0)
+                            string f_f = ruta_destino + "\\" + dir_c_f.Name + "\\" + f_c_f.Name;
+                            var i_em_f = (from c in edm_master.inf_exp_mat
+                                          where c.ruta_archivo == f_f
+                                          select c).ToList();
+
+                            if (i_em_f.Count == 0)
+                            {
+                                DirectoryInfo di_destino = new DirectoryInfo(ruta_destino + "\\" + dir_c_f.Name);
+                                di_destino.Create();
+
+                                File.Copy(f_c_f.FullName, di_destino + "\\" + f_c_f.Name);
+
+                                var i_masterf = (from c in edm_master.inf_master_jvl
+                                                 where c.id_control_exp == id_ctrl
+                                                 select c).ToList();
+
+                                FFProbe ffProbe = new FFProbe();
+                                var videoInfo = ffProbe.GetMediaInfo(di_destino + "\\" + f_c_f.Name.ToString());
+                                DateTime date1 = DateTime.Parse(videoInfo.Duration.ToString());
+                                string f_d = date1.ToLongTimeString();
+
+                                var g_media = new inf_exp_mat
                                 {
-                                    DirectoryInfo di_destino = new DirectoryInfo(ruta_destino + "\\" + dir_c_f.Name);
-                                    di_destino.Create();
+                                    id_exp_mat = Guid.NewGuid(),
+                                    ruta_archivo = di_destino + "\\" + f_c_f.Name.ToString().Replace(ext_wmv, ext_mp4),
+                                    ruta_ext = di_destino + "\\" + f_c_f.Name.ToString().Replace(ext_wmv, ".pdf"),
+                                    duracion = f_d,
+                                    nom_archivo = f_c_f.Name.Replace(ext_mp4, ""),
+                                    id_est_mat = 2,
+                                    id_control_exp = id_ctrl,
+                                    fecha_registro = DateTime.Now,
+                                };
 
-                                    File.Copy(f_c_f.FullName, di_destino + "\\" + f_c_f.Name);
+                                edm_master.inf_exp_mat.Add(g_media);
+                                edm_master.SaveChanges();
+                            }
 
-                                    var i_masterf = (from c in edm_master.inf_master_jvl
-                                                    where c.id_control_exp == id_ctrl
-                                                    select c).ToList();
-
-                                    FFProbe ffProbe = new FFProbe();
-                                    var videoInfo = ffProbe.GetMediaInfo(di_destino + "\\" + f_c_f.Name.ToString());
-                                    string f_d = videoInfo.Duration.Hours + ":" + videoInfo.Duration.Minutes + ":" + videoInfo.Duration.Seconds;
-
-                                    var g_media = new inf_exp_mat
-                                    {
-                                        id_exp_mat = Guid.NewGuid(),
-                                        ruta_archivo = di_destino + "\\" + f_c_f.Name.ToString().Replace(ext_wmv, ext_mp4),
-                                        ruta_ext = di_destino + "\\" + f_c_f.Name.ToString().Replace(ext_wmv, ".pdf"),
-                                        duracion = f_d,
-                                        nom_archivo = f_c_f.Name.Replace(ext_mp4, ""),
-                                        id_est_mat = 2,
-                                        id_control_exp = id_ctrl,
-                                        fecha_registro = DateTime.Now,
-                                    };
-
-                                    edm_master.inf_exp_mat.Add(g_media);
-                                    edm_master.SaveChanges();
-                                }
-                            
                         }
                     }
                 }
