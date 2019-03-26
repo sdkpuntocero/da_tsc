@@ -797,6 +797,88 @@ namespace ca_ts
                     }
                 }
             }
+            var lis_pdf = dir_c_f.GetFiles("*pdf");
+            if (lis_pdf.Length > 0)
+            {
+
+                using (var edm_master = new bd_tsEntities())
+                {
+                    var i_master = (from c in edm_master.inf_master_jvl
+                                    where c.sesion == dir_c_f.Name
+                                    select c).ToList();
+
+                    if (t_ss == 1)
+                    {
+                        if (i_master.Count == 0)
+                        {
+
+                            foreach (FileInfo f_c_f in dir_c_f.GetFiles("*pdf"))
+                            {
+
+                                string f_f = ruta_destino + "\\" + dir_c_f.Name + "\\" + f_c_f.Name;
+                                var i_em_f = (from c in edm_master.inf_exp_mat
+                                              where c.ruta_archivo == f_f
+                                              select c).ToList();
+
+                                if (i_em_f.Count == 0)
+                                {
+                                    DirectoryInfo di_destino = new DirectoryInfo(ruta_destino + "\\" + dir_c_f.Name);
+                                    di_destino.Create();
+
+                                    File.Copy(f_c_f.FullName, di_destino + "\\" + f_c_f.Name);
+
+
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            foreach (FileInfo f_c_f in dir_c_f.GetFiles("*pdf"))
+                            {
+
+                                string f_f = ruta_destino + "\\" + dir_c_f.Name + "\\" + f_c_f.Name;
+                                var i_em_f = (from c in edm_master.inf_exp_mat
+                                              where c.ruta_archivo == f_f
+                                              select c).ToList();
+
+                                if (i_em_f.Count == 0)
+                                {
+                                    DirectoryInfo di_destino = new DirectoryInfo(ruta_destino + "\\" + dir_c_f.Name);
+                                    di_destino.Create();
+
+                                    File.Copy(f_c_f.FullName, di_destino + "\\" + f_c_f.Name);
+
+
+                                }
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (FileInfo f_c_f in dir_c_f.GetFiles("*pdf"))
+                        {
+
+                            string f_f = ruta_destino + "\\" + dir_c_f.Name + "\\" + f_c_f.Name;
+                            var i_em_f = (from c in edm_master.inf_exp_mat
+                                          where c.ruta_archivo == f_f
+                                          select c).ToList();
+
+                            if (i_em_f.Count == 0)
+                            {
+                                DirectoryInfo di_destino = new DirectoryInfo(ruta_destino + "\\" + dir_c_f.Name);
+                                di_destino.Create();
+
+                                File.Copy(f_c_f.FullName, di_destino + "\\" + f_c_f.Name);
+
+
+                            }
+
+                        }
+                    }
+                }
+            }
         }
     }
 }
